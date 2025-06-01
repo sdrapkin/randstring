@@ -2,16 +2,9 @@
 ### Fast cryptographic random string generators for Go.
 
 ```go
-// Text16 generates a random string of the specified length using the Base16 alphabet.
 // func Text16(length int) string
-
-// Text32 generates a random string of the specified length using the Base32 alphabet.
 // func Text32(length int) string
-
-// Text64 generates a random string of the specified length using the Base64 alphabet.
 // func Text64(length int) string
-
-// Text64URL generates a random string of the specified length using the Base64 URL-safe alphabet.
 // func Text64URL(length int) string
 
 package main
