@@ -6,27 +6,29 @@ import (
 	cryptoRand "crypto/rand"
 )
 
-// Standard Base16/Base32/Base64 encoding alphabets from RFC 4648.
-const base16alphabet = "0123456789ABCDEF"
-const base32alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
-const base64alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-const base64url_alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+const (
+	// Standard Base16/Base32/Base64 encoding alphabets from RFC 4648.
+	base16    = "0123456789ABCDEF"
+	base32    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
+	base64    = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+	base64url = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 
-// base16alphabet256 is the base16alphabet repeated enough times to cover all byte values (0-255).
-const base16alphabet256 = base16alphabet + base16alphabet + base16alphabet + base16alphabet +
-	base16alphabet + base16alphabet + base16alphabet + base16alphabet +
-	base16alphabet + base16alphabet + base16alphabet + base16alphabet +
-	base16alphabet + base16alphabet + base16alphabet + base16alphabet
+	// base16_256 is the base16 repeated enough times to cover all byte values (0-255).
+	base16_256 = base16 + base16 + base16 + base16 +
+		base16 + base16 + base16 + base16 +
+		base16 + base16 + base16 + base16 +
+		base16 + base16 + base16 + base16
 
-// base32alphabet256 is the base32alphabet repeated enough times to cover all byte values (0-255).
-const base32alphabet256 = base32alphabet + base32alphabet + base32alphabet + base32alphabet +
-	base32alphabet + base32alphabet + base32alphabet + base32alphabet
+	// base32_256 is the base32 repeated enough times to cover all byte values (0-255).
+	base32_256 = base32 + base32 + base32 + base32 +
+		base32 + base32 + base32 + base32
 
-// base64alphabet256 is the base64alphabet repeated enough times to cover all byte values (0-255).
-const base64alphabet256 = base64alphabet + base64alphabet + base64alphabet + base64alphabet
+	// base64_256 is the base64 repeated enough times to cover all byte values (0-255).
+	base64_256 = base64 + base64 + base64 + base64
 
-// base64url_alph256 is the base64url_alph repeated enough times to cover all byte values (0-255).
-const base64url_alph256 = base64url_alph + base64url_alph + base64url_alph + base64url_alph
+	// base64_256 is the base64url repeated enough times to cover all byte values (0-255).
+	base64url_256 = base64url + base64url + base64url + base64url
+)
 
 func textAlphabet256(alphabet256 string, length int) string {
 	const MAX_STACK_ALLOC = 128
@@ -46,20 +48,20 @@ func textAlphabet256(alphabet256 string, length int) string {
 
 // Text16 generates a random string of the specified length using the Base16 alphabet.
 func Text16(length int) string {
-	return textAlphabet256(base16alphabet256, length)
+	return textAlphabet256(base16_256, length)
 }
 
 // Text32 generates a random string of the specified length using the Base32 alphabet.
 func Text32(length int) string {
-	return textAlphabet256(base32alphabet256, length)
+	return textAlphabet256(base32_256, length)
 }
 
 // Text64 generates a random string of the specified length using the Base64 alphabet.
 func Text64(length int) string {
-	return textAlphabet256(base64alphabet256, length)
+	return textAlphabet256(base64_256, length)
 }
 
 // Text64URL generates a random string of the specified length using the Base64 URL-safe alphabet.
 func Text64URL(length int) string {
-	return textAlphabet256(base64url_alph256, length)
+	return textAlphabet256(base64url_256, length)
 }
