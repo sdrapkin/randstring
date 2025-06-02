@@ -105,6 +105,39 @@ func TestAllLengths(t *testing.T) {
 	}
 } // TestAllLengths
 
+func FuzzTextFunctions(f *testing.F) {
+	funcs := []struct {
+		name string
+		fn   func(int) string
+	}{
+		{"Text16", Text16},
+		{"Text32", Text32},
+		{"Text64", Text64},
+		{"Text64URL", Text64URL},
+	}
+	// Seed with interesting values
+	for _, length := range []int{-100, -1, 0, 1, 2, 16, 127, 128, 129, 255, 256, 512, 1024, 4096} {
+		f.Add(length)
+	}
+	f.Fuzz(func(t *testing.T, length int) {
+		for _, fn := range funcs {
+			if length < 0 {
+				defer func() {
+					if r := recover(); r == nil {
+						t.Errorf("%s: expected panic for negative length %d", fn.name, length)
+					}
+				}()
+				fn.fn(length)
+			} else {
+				s := fn.fn(length)
+				if len(s) != length {
+					t.Errorf("%s(%d): expected length %d, got %d", fn.name, length, length, len(s))
+				}
+			}
+		}
+	})
+} // FuzzTextFunctions
+
 // ===============================================================================
 // Benchmarks for the Text functions. go test -bench=".*" -benchmem -benchtime=5s
 // ===============================================================================
