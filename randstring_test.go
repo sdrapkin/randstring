@@ -82,6 +82,29 @@ func containsRune(s string, r rune) bool {
 	return false
 } // containsRune
 
+func TestAllLengths(t *testing.T) {
+	tests := []struct {
+		name string
+		fn   func(int) string
+	}{
+		{"Text16", Text16},
+		{"Text32", Text32},
+		{"Text64", Text64},
+		{"Text64URL", Text64URL},
+	}
+	const maxLen = 1024
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			for length := 0; length <= maxLen; length++ {
+				s := tt.fn(length)
+				if len(s) != length {
+					t.Errorf("%s(%d): expected length %d, got %d", tt.name, length, length, len(s))
+				}
+			}
+		})
+	}
+} // TestAllLengths
+
 // ===============================================================================
 // Benchmarks for the Text functions. go test -bench=".*" -benchmem -benchtime=5s
 // ===============================================================================
