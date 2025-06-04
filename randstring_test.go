@@ -2,7 +2,10 @@ package randstring
 
 import (
 	cryptoRand "crypto/rand"
+	"fmt"
+	"runtime"
 	"testing"
+	"unsafe"
 )
 
 func TestTextFunctions(t *testing.T) {
@@ -137,6 +140,22 @@ func FuzzTextFunctions(f *testing.F) {
 		}
 	})
 } // FuzzTextFunctions
+
+func TestUnsafeStringGC(t *testing.T) {
+	const ITERATIONS = 100_000
+	strings := make([]string, ITERATIONS)
+	for i := range ITERATIONS {
+		byteSlice := fmt.Appendf(nil, "%d", i)
+		strings[i] = unsafe.String(&byteSlice[0], len(byteSlice))
+	}
+	runtime.GC()
+	for i := range ITERATIONS {
+		expected := fmt.Sprintf("%d", i)
+		if strings[i] != expected {
+			t.Fatalf("GC test failed at index %d: got %q, want %q", i, strings[i], expected)
+		}
+	}
+} // TestUnsafeStringGC
 
 // ===============================================================================
 // Benchmarks for the Text functions. go test -bench=".*" -benchmem -benchtime=5s
