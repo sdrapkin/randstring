@@ -16,6 +16,7 @@ func TestTextFunctions(t *testing.T) {
 	}{
 		{"Text16", Text16, base16},
 		{"Text32", Text32, base32},
+		{"Text32c", Text32c, base32c},
 		{"Text64", Text64, base64},
 		{"Text64URL", Text64URL, base64url},
 	}
@@ -56,6 +57,7 @@ func TestUniqueness(t *testing.T) {
 	}{
 		{"Text16", Text16},
 		{"Text32", Text32},
+		{"Text32c", Text32c},
 		{"Text64", Text64},
 		{"Text64URL", Text64URL},
 	}
@@ -92,6 +94,7 @@ func TestAllLengths(t *testing.T) {
 	}{
 		{"Text16", Text16},
 		{"Text32", Text32},
+		{"Text32c", Text32c},
 		{"Text64", Text64},
 		{"Text64URL", Text64URL},
 	}
@@ -115,6 +118,7 @@ func FuzzTextFunctions(f *testing.F) {
 	}{
 		{"Text16", Text16},
 		{"Text32", Text32},
+		{"Text32c", Text32c},
 		{"Text64", Text64},
 		{"Text64URL", Text64URL},
 	}
@@ -180,7 +184,7 @@ func BenchmarkText16_1024chars(b *testing.B) {
 
 func BenchmarkText32_32chars(b *testing.B) {
 	for b.Loop() {
-		_ = Text32(32)
+		_ = Text32(512)
 	}
 }
 

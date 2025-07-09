@@ -11,6 +11,7 @@ const (
 	// Standard Base16/Base32/Base64 encoding alphabets from RFC 4648.
 	base16    = "0123456789ABCDEF"
 	base32    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
+	base32c   = "0123456789ABCDEFGHJKMNPQRSTVWXYZ" // Crockford Base32
 	base64    = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 	base64url = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 
@@ -23,6 +24,10 @@ const (
 	// base32_256 is the base32 repeated enough times to cover all byte values (0-255).
 	base32_256 = base32 + base32 + base32 + base32 +
 		base32 + base32 + base32 + base32
+
+	// base32c_256 is the base32c repeated enough times to cover all byte values (0-255).
+	base32c_256 = base32c + base32c + base32c + base32c +
+		base32c + base32c + base32c + base32c
 
 	// base64_256 is the base64 repeated enough times to cover all byte values (0-255).
 	base64_256 = base64 + base64 + base64 + base64
@@ -52,6 +57,11 @@ func Text16(length int) string {
 // Text32 generates a random string of the specified length using the Base32 alphabet.
 func Text32(length int) string {
 	return textAlphabet256(base32_256, length)
+}
+
+// Text32 generates a random string of the specified length using the Base32 Crockford alphabet.
+func Text32c(length int) string {
+	return textAlphabet256(base32c_256, length)
 }
 
 // Text64 generates a random string of the specified length using the Base64 alphabet.
