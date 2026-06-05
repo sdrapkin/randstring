@@ -59,7 +59,7 @@ func Text32(length int) string {
 	return textAlphabet256(base32_256, length)
 }
 
-// Text32 generates a random string of the specified length using the Base32 Crockford alphabet.
+// Text32c generates a random string of the specified length using the Base32 Crockford alphabet.
 func Text32c(length int) string {
 	return textAlphabet256(base32c_256, length)
 }
